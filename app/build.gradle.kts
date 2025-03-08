@@ -11,7 +11,7 @@ android {
 
     defaultConfig {
         applicationId = "com.example.noteappjetpackcompose"
-        minSdk = 24
+        minSdk = 26
         targetSdk = 35
         versionCode = 1
         versionName = "1.0"
@@ -48,6 +48,11 @@ dependencies {
 
     //Coroutines
     implementation(libs.kotlinx.coroutines.core)
+
+    //Koin
+    implementation(libs.koin.android)
+    implementation (libs.koin.androidx.compose)
+
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)

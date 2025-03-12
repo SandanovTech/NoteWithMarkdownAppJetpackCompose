@@ -7,5 +7,4 @@ sealed interface NoteState {
     data object Error : NoteState
     data object Loading : NoteState
     data class GetNote(val note: Note) : NoteState
-    data class UpdateNote(val note: Note) : NoteState
 }

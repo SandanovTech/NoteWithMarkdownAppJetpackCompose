@@ -44,7 +44,7 @@ internal fun MainScreen(navController: NavController) {
             val notes = viewModel.note.value
             items(viewModel.listNotesSize.value) {
                 CardNote(notes[it]) {
-                    navController.navigate("${AppScreens.NoteScreen.route}?${notes[it].id}")
+                    navController.navigate("${AppScreens.NoteScreen.route}?noteId=${notes[it].id}")
                 }
             }
         }

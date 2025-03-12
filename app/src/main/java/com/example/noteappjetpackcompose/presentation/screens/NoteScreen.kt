@@ -1,5 +1,6 @@
 package com.example.noteappjetpackcompose.presentation.screens
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -31,7 +32,6 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.noteappjetpackcompose.R
 import com.example.noteappjetpackcompose.domain.model.Note
-import com.example.noteappjetpackcompose.presentation.NoteState
 import com.example.noteappjetpackcompose.presentation.viewModel.NoteViewModel
 import org.koin.androidx.compose.koinViewModel
 import java.time.LocalDateTime
@@ -40,7 +40,8 @@ import java.util.UUID
 @Composable
 internal fun NoteScreen(navController: NavController, transferNoteId: String?) {
     val viewModel: NoteViewModel = koinViewModel()
-    val state by viewModel.state.collectAsState()
+    val note = viewModel.note.collectAsState()
+    val noteValue = note.value
 
     var title by rememberSaveable {
         mutableStateOf("")
@@ -58,41 +59,10 @@ internal fun NoteScreen(navController: NavController, transferNoteId: String?) {
     val noteId by rememberSaveable(transferNoteId) {
         mutableStateOf(transferNoteId ?: UUID.randomUUID().toString())
     }
-
     LaunchedEffect(noteId) {
         viewModel.loadNoteById(noteId)
     }
 
-    LaunchedEffect(state) {
-        if (state is NoteState.GetNote) {
-            viewModel.saveOrUpdateNote(
-                note = Note(
-                    id = noteId,
-                    title = title,
-                    description = description,
-                    mainDescription = textInput,
-                    created = LocalDateTime.now()
-                )
-            )
-        }
-    }
-    when (state) {
-        NoteState.Error -> {
-
-        }
-        is NoteState.GetNote -> {
-
-        }
-        NoteState.Initial -> {
-
-        }
-        NoteState.Loading -> {
-
-        }
-        is NoteState.UpdateNote -> {
-
-        }
-    }
     Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
         Column(
             modifier = Modifier.padding(innerPadding)
@@ -110,7 +80,7 @@ internal fun NoteScreen(navController: NavController, transferNoteId: String?) {
                         .padding(10.dp)
                         .fillMaxWidth(),
                     value = title,
-                    placeholder = { Text(stringResource(R.string.label)) },
+                    placeholder = { Text(noteValue?.title ?: stringResource(R.string.label)) },
                     onValueChange = { newText ->
                         title = newText
                         viewModel.saveOrUpdateNote(
@@ -136,7 +106,7 @@ internal fun NoteScreen(navController: NavController, transferNoteId: String?) {
                         .padding(10.dp)
                         .fillMaxWidth(),
                     value = description,
-                    placeholder = { Text(stringResource(R.string.description)) },
+                    placeholder = { Text(noteValue?.description ?: stringResource(R.string.description)) },
                     onValueChange = { newText ->
                         description = newText
                         viewModel.saveOrUpdateNote(
@@ -187,7 +157,7 @@ internal fun NoteScreen(navController: NavController, transferNoteId: String?) {
                     modifier = Modifier
                         .padding(10.dp),
                     value = textInput,
-                    placeholder = { Text(stringResource(R.string.input_text)) },
+                    placeholder = { Text(noteValue?.mainDescription ?: stringResource(R.string.input_text)) },
                     onValueChange = { newText ->
                         textInput = newText
                         viewModel.saveOrUpdateNote(

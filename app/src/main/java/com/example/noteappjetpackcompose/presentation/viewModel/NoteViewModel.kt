@@ -18,6 +18,9 @@ class NoteViewModel(
     private val _state: MutableStateFlow<NoteState> = MutableStateFlow(NoteState.Initial)
     val state: StateFlow<NoteState> = _state.asStateFlow()
 
+    private var _note = MutableStateFlow<Note?>(null)
+    val note = _note.asStateFlow()
+
     fun saveOrUpdateNote(note: Note) {
         _state.value = NoteState.Loading
         viewModelScope.launch(Dispatchers.IO) {
@@ -25,18 +28,13 @@ class NoteViewModel(
                 repository.saveNote(note)
             }
             repository.updateNote(note)
-            _state.value = NoteState.UpdateNote(note)
+            _state.value = NoteState.GetNote(note)
         }
     }
 
     fun loadNoteById(noteId: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            val note = repository.getNoteId(noteId)
-            if (note != null) {
-                _state.value = NoteState.GetNote(note)
-            } else {
-                _state.value = NoteState.Error
-            }
+            _note.value = repository.getNoteId(noteId)
         }
     }
 }

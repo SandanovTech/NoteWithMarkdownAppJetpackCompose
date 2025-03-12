@@ -18,6 +18,9 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
+    ksp {
+        arg("room.schemaLocation", "$projectDir/schemas")
+    }
 
     buildTypes {
         release {
@@ -51,8 +54,10 @@ dependencies {
 
     //Koin
     implementation(libs.koin.android)
-    implementation (libs.koin.androidx.compose)
+    implementation(libs.koin.androidx.compose)
 
+    //Compose navigation
+    implementation(libs.androidx.navigation.compose)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)

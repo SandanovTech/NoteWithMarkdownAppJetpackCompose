@@ -15,19 +15,24 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.noteappjetpackcompose.domain.model.Note
 import com.example.noteappjetpackcompose.presentation.navigation.AppScreens
 import com.example.noteappjetpackcompose.presentation.viewModel.MainViewModel
+import kotlinx.coroutines.flow.StateFlow
 import org.koin.androidx.compose.koinViewModel
 
 
 @Composable
 internal fun MainScreen(navController: NavController) {
     val viewModel: MainViewModel = koinViewModel()
+    val notes by viewModel.note.collectAsState()
     Scaffold(modifier = Modifier.fillMaxSize(),
         floatingActionButton = {
             FloatingActionButton(onClick = {
@@ -41,9 +46,8 @@ internal fun MainScreen(navController: NavController) {
                 .fillMaxSize()
                 .padding(innerPadding)
         ) {
-            val notes = viewModel.note.value
-            items(viewModel.listNotesSize.value) {
-                CardNote(notes[it]) {
+            items(notes.size) {
+                CardNote(note = notes[it]) {
                     navController.navigate("${AppScreens.NoteScreen.route}?noteId=${notes[it].id}")
                 }
             }
@@ -52,7 +56,7 @@ internal fun MainScreen(navController: NavController) {
 }
 
 @Composable
-fun CardNote(note: Note, onClick: () -> Unit) {
+fun CardNote(modifier: Modifier = Modifier, note: Note, onClick: () -> Unit) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -60,6 +64,7 @@ fun CardNote(note: Note, onClick: () -> Unit) {
             .clickable {
                 onClick()
             }
+            .shadow(1.dp)
     ) {
         Column(
             modifier = Modifier

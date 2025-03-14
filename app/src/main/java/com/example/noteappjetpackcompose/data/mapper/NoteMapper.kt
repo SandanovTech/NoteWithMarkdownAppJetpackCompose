@@ -18,6 +18,11 @@ fun List<NoteEntity>.mapToNoteDomainList() : List<Note> {
     return this.map { it.mapToNoteDomain() }
 }
 
+fun Flow<List<NoteEntity>>.mapToNoteDomainFlowList() : Flow<List<Note>> {
+    return this.map { it.mapToNoteDomainList() }
+}
+
+
 fun MutableStateFlow<NoteEntity>.mapToNoteDomainList() : Flow<Note> {
     return this.map { it.mapToNoteDomain() }
 }

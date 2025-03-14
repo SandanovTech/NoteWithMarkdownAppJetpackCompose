@@ -2,10 +2,11 @@ package com.example.noteappjetpackcompose.data
 
 import com.example.noteappjetpackcompose.data.local.repository.LocalDataSourceImpl
 import com.example.noteappjetpackcompose.data.mapper.mapToNoteDomain
-import com.example.noteappjetpackcompose.data.mapper.mapToNoteDomainList
+import com.example.noteappjetpackcompose.data.mapper.mapToNoteDomainFlowList
 import com.example.noteappjetpackcompose.data.mapper.mapToNoteEntity
 import com.example.noteappjetpackcompose.domain.Repository
 import com.example.noteappjetpackcompose.domain.model.Note
+import kotlinx.coroutines.flow.Flow
 
 class RepositoryImpl(
     private val localRepository : LocalDataSourceImpl
@@ -26,7 +27,7 @@ class RepositoryImpl(
         return localRepository.getNoteId(noteId)?.mapToNoteDomain()
     }
 
-    override suspend fun loadNotes(): List<Note> {
-        return localRepository.loadNotes().mapToNoteDomainList()
+    override suspend fun loadNotes(): Flow<List<Note>> {
+        return localRepository.loadNotes().mapToNoteDomainFlowList()
     }
 }

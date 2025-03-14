@@ -2,6 +2,7 @@ package com.example.noteappjetpackcompose.data.local.repository
 
 import com.example.noteappjetpackcompose.data.local.dao.NoteDao
 import com.example.noteappjetpackcompose.data.local.model.NoteEntity
+import kotlinx.coroutines.flow.Flow
 
 class LocalDataSourceImpl(
     private val noteDao: NoteDao,
@@ -23,7 +24,7 @@ class LocalDataSourceImpl(
         return noteDao.getNoteId(noteId)
     }
 
-    override suspend fun loadNotes(): List<NoteEntity> {
+    override suspend fun loadNotes(): Flow<List<NoteEntity>> {
         return noteDao.loadNotes()
     }
 }

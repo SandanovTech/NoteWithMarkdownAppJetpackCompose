@@ -16,9 +16,6 @@ class MainViewModel(
     private val _state = MutableStateFlow<NoteState>(NoteState.Initial)
     val state = _state.asStateFlow()
 
-    private var _listNotesSize = MutableStateFlow<Int>(0)
-    val listNotesSize = _listNotesSize.asStateFlow()
-
     private var _note = MutableStateFlow<List<Note>>(emptyList())
     val note = _note.asStateFlow()
 
@@ -28,8 +25,9 @@ class MainViewModel(
 
     private fun getNotes() {
         viewModelScope.launch(Dispatchers.IO) {
-            _listNotesSize.value = repository.loadNotes().size
-            _note.value = repository.loadNotes()
+            repository.loadNotes().collect {notes ->
+                _note.value = notes
+            }
         }
     }
 

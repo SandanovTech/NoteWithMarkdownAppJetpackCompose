@@ -43,16 +43,16 @@ internal fun NoteScreen(navController: NavController, transferNoteId: String?) {
     val note = viewModel.note.collectAsState()
     val noteValue = note.value
 
-    var title by rememberSaveable {
-        mutableStateOf("")
+    var title by rememberSaveable(noteValue) {
+        mutableStateOf(noteValue?.title ?: "")
     }
 
-    var description by rememberSaveable {
-        mutableStateOf("")
+    var description by rememberSaveable(noteValue) {
+        mutableStateOf(noteValue?.description ?: "")
     }
 
-    var textInput by rememberSaveable {
-        mutableStateOf("")
+    var textInput by rememberSaveable(noteValue) {
+        mutableStateOf(noteValue?.mainDescription ?: "")
     }
 
 
@@ -80,7 +80,6 @@ internal fun NoteScreen(navController: NavController, transferNoteId: String?) {
                         .padding(10.dp)
                         .fillMaxWidth(),
                     value = title,
-                    placeholder = { Text(noteValue?.title ?: stringResource(R.string.label)) },
                     onValueChange = { newText ->
                         title = newText
                         viewModel.saveOrUpdateNote(
@@ -93,6 +92,7 @@ internal fun NoteScreen(navController: NavController, transferNoteId: String?) {
                             )
                         )
                     },
+                    placeholder = { Text(stringResource(R.string.label)) },
                     colors = OutlinedTextFieldDefaults.colors(
                         focusedBorderColor = Color.Transparent,
                         unfocusedBorderColor = Color.Transparent,
@@ -106,7 +106,7 @@ internal fun NoteScreen(navController: NavController, transferNoteId: String?) {
                         .padding(10.dp)
                         .fillMaxWidth(),
                     value = description,
-                    placeholder = { Text(noteValue?.description ?: stringResource(R.string.description)) },
+                    placeholder = { Text(stringResource(R.string.description)) },
                     onValueChange = { newText ->
                         description = newText
                         viewModel.saveOrUpdateNote(
@@ -157,7 +157,7 @@ internal fun NoteScreen(navController: NavController, transferNoteId: String?) {
                     modifier = Modifier
                         .padding(10.dp),
                     value = textInput,
-                    placeholder = { Text(noteValue?.mainDescription ?: stringResource(R.string.input_text)) },
+                    label = { Text(stringResource(R.string.input_text)) },
                     onValueChange = { newText ->
                         textInput = newText
                         viewModel.saveOrUpdateNote(

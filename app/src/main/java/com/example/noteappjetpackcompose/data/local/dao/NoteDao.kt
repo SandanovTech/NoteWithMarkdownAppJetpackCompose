@@ -6,6 +6,7 @@ import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
 import com.example.noteappjetpackcompose.data.local.model.NoteEntity
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface NoteDao {
@@ -22,5 +23,5 @@ interface NoteDao {
     fun getNoteId(noteId : String) : NoteEntity?
 
     @Query("Select * from note")
-    fun loadNotes() : List<NoteEntity>
+    fun loadNotes() : Flow<List<NoteEntity>>
 }

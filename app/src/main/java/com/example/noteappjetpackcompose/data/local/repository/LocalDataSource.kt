@@ -8,5 +8,5 @@ interface LocalDataSource {
     suspend fun deletedNote(note: NoteEntity)
     suspend fun updateNote(note: NoteEntity)
     suspend fun getNoteId(noteId: String): NoteEntity?
-    suspend fun loadNotes() : Flow<List<NoteEntity>>
+    fun loadNotes() : Flow<List<NoteEntity>>
 }

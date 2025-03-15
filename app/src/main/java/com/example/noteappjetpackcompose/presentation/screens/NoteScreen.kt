@@ -1,8 +1,6 @@
 package com.example.noteappjetpackcompose.presentation.screens
 
-import android.util.Log
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -189,11 +187,13 @@ internal fun NoteScreen(navController: NavController, transferNoteId: String?) {
 
                     IconButton(onClick = {
                         textSize--
-                    }) { Icon(
-                        painter = painterResource(R.drawable.baseline_text_decrease_24),
-                        null,
-                        modifier = Modifier.padding(5.dp)
-                    )}
+                    }) {
+                        Icon(
+                            painter = painterResource(R.drawable.baseline_text_decrease_24),
+                            null,
+                            modifier = Modifier.padding(5.dp)
+                        )
+                    }
 
 
                 }

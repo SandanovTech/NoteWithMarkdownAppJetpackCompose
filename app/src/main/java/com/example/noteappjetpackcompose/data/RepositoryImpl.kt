@@ -27,7 +27,7 @@ class RepositoryImpl(
         return localRepository.getNoteId(noteId)?.mapToNoteDomain()
     }
 
-    override suspend fun loadNotes(): Flow<List<Note>> {
+    override fun loadNotes(): Flow<List<Note>> {
         return localRepository.loadNotes().mapToNoteDomainFlowList()
     }
 }

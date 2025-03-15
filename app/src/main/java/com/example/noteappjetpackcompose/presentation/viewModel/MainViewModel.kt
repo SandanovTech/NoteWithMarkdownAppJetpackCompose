@@ -5,10 +5,10 @@ import androidx.lifecycle.viewModelScope
 import com.example.noteappjetpackcompose.domain.Repository
 import com.example.noteappjetpackcompose.domain.model.Note
 import com.example.noteappjetpackcompose.presentation.NoteState
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 
 class MainViewModel(
     private val repository: Repository,
@@ -24,11 +24,11 @@ class MainViewModel(
     }
 
     private fun getNotes() {
-        viewModelScope.launch(Dispatchers.IO) {
-            repository.loadNotes().collect {notes ->
-                _note.value = notes
+        repository.loadNotes()
+            .onEach {
+                _note.value = it
             }
-        }
+            .launchIn(viewModelScope)
     }
 
     companion object {

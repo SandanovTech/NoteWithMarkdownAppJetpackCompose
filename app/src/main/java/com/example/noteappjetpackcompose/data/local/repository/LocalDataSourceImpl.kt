@@ -24,7 +24,7 @@ class LocalDataSourceImpl(
         return noteDao.getNoteId(noteId)
     }
 
-    override suspend fun loadNotes(): Flow<List<NoteEntity>> {
+    override fun loadNotes(): Flow<List<NoteEntity>> {
         return noteDao.loadNotes()
     }
 }

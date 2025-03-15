@@ -8,5 +8,5 @@ interface Repository {
     suspend fun deletedNote(note: Note)
     suspend fun updateNote(note: Note)
     suspend fun getNoteId(noteId: String): Note?
-    suspend fun loadNotes() : Flow<List<Note>>
+    fun loadNotes() : Flow<List<Note>>
 }

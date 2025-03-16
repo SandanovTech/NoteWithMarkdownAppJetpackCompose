@@ -5,8 +5,10 @@ import androidx.lifecycle.viewModelScope
 import com.example.noteappjetpackcompose.domain.Repository
 import com.example.noteappjetpackcompose.domain.model.Note
 import com.example.noteappjetpackcompose.presentation.NoteState
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 

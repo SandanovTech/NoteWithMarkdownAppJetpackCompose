@@ -6,7 +6,9 @@ import com.example.noteappjetpackcompose.data.mapper.mapToNoteDomainFlowList
 import com.example.noteappjetpackcompose.data.mapper.mapToNoteEntity
 import com.example.noteappjetpackcompose.domain.Repository
 import com.example.noteappjetpackcompose.domain.model.Note
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOn
 
 class RepositoryImpl(
     private val localRepository : LocalDataSourceImpl

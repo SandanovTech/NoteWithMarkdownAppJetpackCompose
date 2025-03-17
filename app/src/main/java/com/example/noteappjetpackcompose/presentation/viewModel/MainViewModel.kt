@@ -5,10 +5,12 @@ import androidx.lifecycle.viewModelScope
 import com.example.noteappjetpackcompose.domain.Repository
 import com.example.noteappjetpackcompose.domain.model.Note
 import com.example.noteappjetpackcompose.presentation.NoteState
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 
 class MainViewModel(
     private val repository: Repository,
@@ -35,6 +37,12 @@ class MainViewModel(
                 }
             }
             .launchIn(viewModelScope)
+    }
+
+    fun deleteNote(note: Note) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.deletedNote(note)
+        }
     }
 
     companion object {

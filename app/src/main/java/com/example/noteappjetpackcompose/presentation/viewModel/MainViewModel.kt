@@ -5,10 +5,8 @@ import androidx.lifecycle.viewModelScope
 import com.example.noteappjetpackcompose.domain.Repository
 import com.example.noteappjetpackcompose.domain.model.Note
 import com.example.noteappjetpackcompose.presentation.NoteState
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
@@ -26,9 +24,15 @@ class MainViewModel(
     }
 
     private fun getNotes() {
+        _state.value = NoteState.Loading
         repository.loadNotes()
             .onEach {
-                _note.value = it
+                if (it.isEmpty()) {
+                    _state.value = NoteState.Error
+                } else {
+                    _note.value = it
+                    _state.value = NoteState.GetNotes(it)
+                }
             }
             .launchIn(viewModelScope)
     }

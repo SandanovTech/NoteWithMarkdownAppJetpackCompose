@@ -41,6 +41,12 @@ android {
     buildFeatures {
         compose = true
     }
+    packaging {
+        resources {
+            excludes += "META-INF/LICENSE.md"
+            excludes += "META-INF/LICENSE-notice.md"
+        }
+    }
 }
 
 dependencies {
@@ -48,6 +54,7 @@ dependencies {
     //Room
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)
+    androidTestImplementation(libs.junit.jupiter)
     ksp(libs.androidx.room.compiler)
 
     //Coroutines
@@ -59,6 +66,12 @@ dependencies {
 
     //Compose navigation
     implementation(libs.androidx.navigation.compose)
+
+    //Test mock
+    androidTestImplementation(libs.mockito.core)
+    androidTestImplementation(libs.mockito.kotlin)
+    androidTestImplementation(libs.mockk)
+    runtimeOnly(libs.mockito.android)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)

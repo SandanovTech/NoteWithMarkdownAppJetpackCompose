@@ -17,7 +17,7 @@ class RepositoryImpl(
         return localRepository.saveNote(note.mapToNoteEntity())
     }
 
-    override suspend fun deletedNote(note: Note) {
+    override suspend fun deleteNote(note: Note) {
         localRepository.deletedNote(note.mapToNoteEntity())
     }
 

@@ -41,7 +41,7 @@ class MainViewModel(
 
     fun deleteNote(note: Note) {
         viewModelScope.launch(Dispatchers.IO) {
-            repository.deletedNote(note)
+            repository.deleteNote(note)
         }
     }
 

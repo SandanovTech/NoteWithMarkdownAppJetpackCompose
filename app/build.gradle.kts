@@ -73,6 +73,9 @@ dependencies {
     androidTestImplementation(libs.mockk)
     runtimeOnly(libs.mockito.android)
 
+    //SplashScreen Api
+    implementation(libs.androidx.core.splashscreen)
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)

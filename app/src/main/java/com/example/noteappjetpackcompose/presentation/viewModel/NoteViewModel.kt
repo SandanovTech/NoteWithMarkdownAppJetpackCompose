@@ -28,7 +28,6 @@ class NoteViewModel(
                 repository.saveNote(note)
             }
             repository.updateNote(note)
-            _state.value = NoteState.GetNote(note)
         }
     }
 

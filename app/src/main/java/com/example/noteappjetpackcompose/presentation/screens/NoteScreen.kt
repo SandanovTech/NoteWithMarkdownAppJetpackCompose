@@ -39,9 +39,9 @@ import androidx.compose.ui.text.input.TransformedText
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
 import com.example.noteappjetpackcompose.R
 import com.example.noteappjetpackcompose.domain.model.Note
+import com.example.noteappjetpackcompose.presentation.NoteState
 import com.example.noteappjetpackcompose.presentation.viewModel.NoteViewModel
 import org.koin.androidx.compose.koinViewModel
 import java.time.LocalDateTime
@@ -50,8 +50,7 @@ import java.util.UUID
 private const val LOG_TAG = "NoteScreen"
 
 @Composable
-internal fun NoteScreen(navController: NavController, transferNoteId: String?) {
-    val viewModel: NoteViewModel = koinViewModel()
+internal fun NoteScreen(viewModel: NoteViewModel, state : NoteState, transferNoteId: String?) {
     val note = viewModel.note.collectAsState()
     val noteValue = note.value
 
